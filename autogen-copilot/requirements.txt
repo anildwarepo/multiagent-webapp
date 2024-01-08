@@ -1,0 +1,12 @@
+ipython
+azure-search-documents 
+Flask
+flask[async]
+Flask-Cors
+ipykernel
+python-dotenv
+pandas
+pyodbc
+sqlalchemy
+tenacity
+pyautogen~=0.2.0b4
