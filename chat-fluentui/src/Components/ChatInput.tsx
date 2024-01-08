@@ -38,6 +38,7 @@ const ChatInputComponent: React.FC<ChatInputComponentProps>  = ({faq, setFAQ, ..
 
     useEffect(() => {
         setUserQuery(faq ?? '');
+        updateChatHistory(userQuery, chatMessage as ChatMessage)
     }, [faq]); 
 
     useEffect(() => {
