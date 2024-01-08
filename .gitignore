@@ -1,3 +1,4 @@
 autogen-copilot/OAI_CONFIG_LIST
 autogen-copilot/secrets.env
 containerapp-config.env
+chat-fluentui/src/config.json
