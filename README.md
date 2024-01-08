@@ -16,7 +16,7 @@ The multiagent chatbot can answers about company info based on 10K documents tha
 ![Company Info](./assets/companyinfo.png)
 
 ## Data Analysis and Visualization
-The multiagent chatbot figures out the correct SQL Server tables to query and orchestrates with other agents for data analysis and visualization. 
+The multiagent chatbot figures out the correct SQL Server tables to query and orchestrates with other agents for data analysis and visualization. The agents uses Plotly to generate graphs based on user questions and data retrieved from SQL Server database.
 
 ![Data Analysis](./assets/dataanalysis.png)
 
@@ -30,7 +30,7 @@ If you like to try out the multiagent chatbot, you can follow the steps below.
 
 ### Prerequisites
 - Node
-- Python 3.6+
+- Python 3.10
 - Bash
 - Docker
 - SQL Server database with Northwind database installed. You can follow the steps [here](https://docs.microsoft.com/en-us/sql/samples/northwind-install-configure?view=sql-server-ver15&tabs=ssms) to install the Northwind database.
