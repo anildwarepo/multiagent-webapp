@@ -18,7 +18,8 @@ The multiagent chatbot can answers about company info based on 10K documents tha
 ## Data Analysis and Visualization
 The multiagent chatbot figures out the correct SQL Server tables to query and orchestrates with other agents for data analysis and visualization. The agents uses Plotly to generate graphs based on user questions and data retrieved from SQL Server database.
 
-![Data Analysis](./assets/dataanalysis.png)
+![Data Analysis](./assets/da2.png)
+
 
 ## Product User Guide
 The multiagent chatbot can answer questions about product user guide. This uses the Retrieval Augmented Generation (RAG) model for retrieving the relevant documents and then uses the LLMs for generating the answer. But this uses a different vector database than the one used for company info. The multiagent can disambiguate the user question and route it to the vector database.
