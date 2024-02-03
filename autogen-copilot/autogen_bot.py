@@ -183,6 +183,27 @@ async def start_multiagent_chat(userQuery):
         llm_config= communicationsExpert_llm_config
     )
 
+
+    documentAgent = AssistantAgent(
+        name="documentAgent",
+        is_termination_msg=termination_msg,
+        system_message="""
+            You are a document expert. You will be provided with a document to analyze. 
+            You need to classify and extract information from the document.
+            Reply `TERMINATE` in the end when everything is done. 
+            
+            You need to classify the documents into the following type and subtypes:
+            type: financial, legal, technical, HR, other
+            subtypes: HR_email, HR_policies, HR_letter, HR_forms, HR_emails
+
+            Provide your reason for classification and a short summary of the content of the document you used to classify.
+            Your answer in json format:
+            { "document_classification": "true", "document_type": "type of document", "document_content": "providecontent of the document" }
+
+        """,
+        llm_config=llm_config,
+    )
+
     expertAgent = AssistantAgent(
         name="expertAgent",
         is_termination_msg=termination_msg,
@@ -214,7 +235,7 @@ async def start_multiagent_chat(userQuery):
     
 
     groupchat = autogen.GroupChat(
-        agents=[userProxyAgent, expertAgent, dataAnalysisExpert, communicationsExpert, plotlyExpert],
+        agents=[userProxyAgent, expertAgent, documentAgent, dataAnalysisExpert, communicationsExpert, plotlyExpert],
         messages=[],
         max_round=12,
         speaker_selection_method="auto",

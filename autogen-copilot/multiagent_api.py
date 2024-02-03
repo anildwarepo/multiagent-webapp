@@ -3,6 +3,8 @@ from flask_cors import CORS
 import openai_helper
 import autogen_bot
 import slm_api
+import docintelligence_helper
+
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
@@ -58,6 +60,8 @@ async def post():
 
     query_cateory = data['query_category']
     if(query_cateory == "Small Language Model"):
+        response = await slm_api.get_slm_response(data['userMessage'])
+    if(query_cateory == "Document Analysis"):
         response = await slm_api.get_slm_response(data['userMessage'])
     else:
         response = await autogen_bot.start_multiagent_chat(data['userMessage'])
