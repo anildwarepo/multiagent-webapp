@@ -49,7 +49,7 @@ export const getGreetings = (onDataReceived:any) => {
     });
 }
 
-export const sendMessage = (userQuery: string, chatMessage: ChatMessage, onDataReceived:any) => {
+export const sendMessage = (userQuery: string, chatMessage: ChatMessage, onDataReceived:any, queryCategory?: string) => {
 
     if (userQuery === '') {
         return;
@@ -57,6 +57,7 @@ export const sendMessage = (userQuery: string, chatMessage: ChatMessage, onDataR
 
     const apiRequest = {"userMessage": userQuery, 
                         "queue_name": chatMessage?.queue_name, 
+                        "query_category": queryCategory,
                         "use_streaming": chatMessage?.use_streaming}
 
     const postPayLoad = {

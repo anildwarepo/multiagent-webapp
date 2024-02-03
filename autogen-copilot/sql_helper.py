@@ -6,12 +6,10 @@ import sqlite3
 from sqlalchemy import create_engine  
 import sqlalchemy as sql
 from urllib import parse
-from pathlib import Path  # Python 3.6+ only
-from dotenv import load_dotenv
+import load_env
 
 
-env_path = Path('.') / 'secrets.env'
-load_dotenv(dotenv_path=env_path)
+load_env.load_env()
 
 #connecting_string = f"Driver={{ODBC Driver 17 for SQL Server}};Server=tcp:localhost\sqlexpress;Database=Northwind;Uid=sa;Pwd=Treetop@123;"
 connecting_string = os.getenv("SQL_SERVER_CONNECTION_STRING")

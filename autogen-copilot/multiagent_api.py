@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 import openai_helper
 import autogen_bot
+import slm_api
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
@@ -54,7 +55,12 @@ async def post():
     """
     print("Received POST request...")
     data = request.get_json()
-    response = await autogen_bot.start_multiagent_chat(data['userMessage'])
+
+    query_cateory = data['query_category']
+    if(query_cateory == "Small Language Model"):
+        response = await slm_api.get_slm_response(data['userMessage'])
+    else:
+        response = await autogen_bot.start_multiagent_chat(data['userMessage'])
     return response
 
 

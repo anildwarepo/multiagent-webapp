@@ -10,3 +10,5 @@ pyodbc
 sqlalchemy
 tenacity
 pyautogen~=0.2.0b4
+aiohttp
+azure-ai-formrecognizer

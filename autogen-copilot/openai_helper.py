@@ -3,12 +3,10 @@ import os
 from werkzeug import Response
 from openai import AzureOpenAI
 from tenacity import retry, wait_random_exponential, stop_after_attempt 
-from dotenv import load_dotenv
-from pathlib import Path 
+import load_env
 
 
-env_path = Path('.') / 'secrets.env'
-load_dotenv(dotenv_path=env_path)
+load_env.load_env()
 
 endpoint = os.environ["AZURE_OPENAI_ENDPOINT"]
 api_key = os.environ["AZURE_OPENAI_API_KEY"]

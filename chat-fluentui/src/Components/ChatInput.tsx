@@ -19,10 +19,11 @@ import SkeletonComponent from "./SkeletonComponent";
 
 interface ChatInputComponentProps extends Partial<TextareaProps> {
     faq: string;
-    setFAQ: (query: string) => void;
+    queryCategory: string;
+    setFAQ?: (query: string, queryCategory: string) => void;
 }
 
-const ChatInputComponent: React.FC<ChatInputComponentProps>  = ({faq, setFAQ, ...props}) => {
+const ChatInputComponent: React.FC<ChatInputComponentProps>  = ({faq, queryCategory, ...props}) => {
     //function ChatInputComponent(props: Partial<TextareaProps>) {
     const textareaId = useId("textarea");
     const [userQuery, setUserQuery] = useState('');
@@ -38,7 +39,7 @@ const ChatInputComponent: React.FC<ChatInputComponentProps>  = ({faq, setFAQ, ..
 
     useEffect(() => {
         setUserQuery(faq ?? '');
-        updateChatHistory(faq, chatMessage as ChatMessage)
+        updateChatHistory(faq, chatMessage as ChatMessage, queryCategory)
     }, [faq]); 
 
     useEffect(() => {
@@ -116,14 +117,14 @@ const ChatInputComponent: React.FC<ChatInputComponentProps>  = ({faq, setFAQ, ..
 
 
 
-    const updateChatHistory = (userQuery: string, chatMessage: ChatMessage) => {
+    const updateChatHistory = (userQuery: string, chatMessage: ChatMessage, queryCategory?: string) => {
         if (userQuery === "" || isSending) { return; }
         const userItem = { userType: "user", userMessage: userQuery };
         const botItem = { userType: "system", userMessage: "" };
         let userItems = [...chatHistory, userItem, botItem];
         setChatHistory(userItems);
         setIsSending(true);
-        sendMessage(userQuery, chatMessage as ChatMessage, handleMessage);
+        sendMessage(userQuery, chatMessage as ChatMessage, handleMessage, queryCategory);
         setUserQuery('');
     }
 

@@ -11,13 +11,13 @@ import { Text } from "@fluentui/react";
 import * as Styles from "./styles";
 
 interface FAQComponentProps {
-    onPanelClick: (query: string) => void;
+    onPanelClick: (query: string, queryCategory: string) => void;
 }
 
 const FAQComponent: React.FC<FAQComponentProps> = ({ onPanelClick, ...props }) => {
 
-    const handlePanelClick = (e: any) => {
-        onPanelClick(e);
+    const handlePanelClick = (e: any, queryCategory: string) => {
+        onPanelClick(e, queryCategory);
         //onPanelClick(e.target.textContent || e.target.innerText); // Update this string as needed
     };
 
@@ -36,7 +36,9 @@ const FAQComponent: React.FC<FAQComponentProps> = ({ onPanelClick, ...props }) =
         { key: 'q7', text: 'Predict monthly revenue for next 6 months.', 'category': 'Data Analysis' },
         { key: 'q8', text: 'Pick top 20 customers generated most revenue and for each customer show 3 products that they purchased most', 'category': 'Data Analysis'},
         { key: 'q9', text: 'which type of telco customer has the highest churn rate?. Generate customer email to address churn rate.' , 'category': 'Data Analysis'},
-        { key: 'q10', text: 'How to configure networking using SDWAN?' , 'category': 'Product Guide'}             
+        { key: 'q16', text: 'Show me daily revenue trends per region' , 'category': 'Small Language Model'},  
+        { key: 'q17', text: 'What is the impact of discount on sales? What is optimal discount rate?' , 'category': 'Small Language Model'},
+        { key: 'q18', text: 'Is that true that top 20% customers generate 80% revenue? What is their percentage of revenue contribution?' , 'category': 'Small Language Model'},           
 
     ];
 
@@ -63,7 +65,7 @@ const FAQComponent: React.FC<FAQComponentProps> = ({ onPanelClick, ...props }) =
                     </AccordionHeader>
                         {questions.map((question) => (
                             <AccordionPanel key={question.key}>
-                                <div className={Styles.faqItemsStyle} onClick={() => handlePanelClick(question.text)}>
+                                <div className={Styles.faqItemsStyle} onClick={() => handlePanelClick(question.text, question.category)}>
                                     {question.text}
                                 </div>
                             </AccordionPanel>

@@ -1,16 +1,14 @@
 from azure.search.documents import SearchClient
 from azure.search.documents.indexes import SearchIndexClient  
 import os  
-
 from azure.search.documents.models import VectorizedQuery
 from azure.core.credentials import AzureKeyCredential 
-from dotenv import load_dotenv  
 import openai_helper
 from azure.search.documents.indexes.models import SearchFieldDataType 
+import load_env
 
-from pathlib import Path  # Python 3.6+ only
-env_path = Path('.') / 'secrets.env'  
-load_dotenv(dotenv_path=env_path)
+
+load_env.load_env()
 
 service_endpoint = os.getenv("AZURE_SEARCH_SERVICE_ENDPOINT") 
 #index_name = os.getenv("AZURE_SEARCH_INDEX_NAME") 

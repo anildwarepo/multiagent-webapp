@@ -8,10 +8,12 @@ import { useState } from 'react';
 function MainComponent() {
     
     const [faq, setFAQ] = useState('');
+    const [queryCategory, setQueryCategory] = useState('');
 
     // Callback function to update userQuery
-    const updateUserQuery = (query: string) => {
+    const updateUserQuery = (query: string, queryCategory: string) => {
         setFAQ(query);
+        setQueryCategory(queryCategory);
     };
     
     return (
@@ -27,7 +29,7 @@ function MainComponent() {
             <div style={{ width: '80%', height: '100%', backgroundColor: '#424242' }}>
                 <div className={mergeStyles(Styles.rightParentContainerStyles)}>
                     <div className={mergeStyles(Styles.rightContainerStyles)}>
-                        <ChatInputComponent faq={faq} setFAQ={setFAQ}/>
+                        <ChatInputComponent faq={faq} queryCategory={queryCategory}/>
                     </div>
                 </div>
             </div>
