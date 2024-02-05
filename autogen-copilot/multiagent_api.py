@@ -32,7 +32,7 @@ def greeting():
 @app.route('/chat/doclist', methods=['GET'])
 def getDocList():
     # read file names from folder
-    docDirectory = "document_classification/all_documents"
+    docDirectory = "document_classification/demodocs"
     docList = []
 
     #for filename in os.listdir(docDirectory): with index
@@ -80,7 +80,7 @@ async def post():
         response = await slm_api.get_slm_response(data['userMessage'])
     if(query_cateory == "Document Analysis"):
         print("Document Analysis")
-        url = f"https://github.com/anildwarepo/multiagent-webapp/raw/main/autogen-copilot/document_classification/all_documents/{data['userMessage']}.docx"
+        url = f"https://github.com/anildwarepo/multiagent-webapp/raw/main/autogen-copilot/document_classification/demodocs/{data['userMessage']}.docx"
         doc_content = docintelligence_helper.submit_document_for_analysis(url)
         response = openai_helper.get_chatgpt_base_response(doc_content, os.environ['SYSTEM_MESSAGE'], service_bus_session_id=None, queue=None)
         #response = await autogen_bot.start_multiagent_chat( doc_content)
