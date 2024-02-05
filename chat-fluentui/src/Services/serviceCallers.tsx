@@ -16,6 +16,37 @@ export const cancelStream = (onDataReceived:any) => {
     }
 }
 
+export const getDocList = (onDataReceived:any) => {
+  const postPayLoad = {
+      method: "GET",
+      headers: { 'Content-Type': 'application/json' }
+  };
+
+  fetch(`${backendAPIHost}/chat/doclist`, postPayLoad)
+  .then(response => {
+    return response.text();
+  })
+  .then(data => {
+    onDataReceived(data);
+  })
+  .then(text => {
+    //console.log(text); // Here you can process your text data
+    // If the server sends JSON strings, you can parse them here
+    // const data = JSON.parse(text);
+    // Process the data...
+  })
+  .catch(error => {
+    console.error("Stream failed:", error);
+    onDataReceived("Error occurred while sending message.");
+    return {
+      "api": "getDocList",
+      "method": "GET",
+      "status": "error",
+      "chatHistory": null,
+      "message": error.toString() + "\n\n Please check if bot api is running."
+    };
+  });
+}
 
 export const getGreetings = (onDataReceived:any) => {
     const postPayLoad = {
@@ -40,8 +71,8 @@ export const getGreetings = (onDataReceived:any) => {
       console.error("Stream failed:", error);
       onDataReceived("Error occurred while sending message.");
       return {
-        "api": "send_chat",
-        "method": "POST",
+        "api": "getGreetings",
+        "method": "GET",
         "status": "error",
         "chatHistory": null,
         "message": error.toString() + "\n\n Please check if bot api is running."

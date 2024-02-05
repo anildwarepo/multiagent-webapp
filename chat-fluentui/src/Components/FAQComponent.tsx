@@ -9,17 +9,26 @@ import {
 } from "@fluentui/react-components";
 import { Text } from "@fluentui/react";
 import * as Styles from "./styles";
+import { useEffect } from 'react';
+import { getDocList } from '../Services/serviceCallers';
+import { get } from "http";
+
 
 interface FAQComponentProps {
     onPanelClick: (query: string, queryCategory: string) => void;
 }
 
+interface Doc {
+    key: string;
+    text: string;
+    category: string;
+}
+
 const FAQComponent: React.FC<FAQComponentProps> = ({ onPanelClick, ...props }) => {
 
-    const handlePanelClick = (e: any, queryCategory: string) => {
-        onPanelClick(e, queryCategory);
-        //onPanelClick(e.target.textContent || e.target.innerText); // Update this string as needed
-    };
+    
+    
+ 
 
     const options = [
         { key: 'q11', text: 'What are the different product divisions in Microsoft?', 'category': 'Company Info' },
@@ -39,6 +48,7 @@ const FAQComponent: React.FC<FAQComponentProps> = ({ onPanelClick, ...props }) =
         { key: 'q16', text: 'Show me daily revenue trends per region' , 'category': 'Small Language Model'},  
         { key: 'q17', text: 'What is the impact of discount on sales? What is optimal discount rate?' , 'category': 'Small Language Model'},
         { key: 'q18', text: 'Is that true that top 20% customers generate 80% revenue? What is their percentage of revenue contribution?' , 'category': 'Small Language Model'},           
+        /*
         { key:'q22', text:'Anti-Discrimination Policy', 'category': 'Document Analysis' },
         { key:'q23', text:'At-Will Employment Policy', 'category': 'Document Analysis' },
         { key:'q24', text:'Attendance Policy', 'category': 'Document Analysis' },
@@ -77,14 +87,45 @@ const FAQComponent: React.FC<FAQComponentProps> = ({ onPanelClick, ...props }) =
         { key:'q57', text:'Leave Encashment Policy Format', 'category': 'Document Analysis' },
         { key:'q58', text:'Leave Policy', 'category': 'Document Analysis' },
         { key:'q59', text:'Maternity Leave Policy', 'category': 'Document Analysis' },
-   
+        */
     ];
 
+    const [docList, setDocList] = React.useState<Record<string, typeof options>>({});
+    
+    /*
     const groupedOptions = options.reduce((acc, option) => {
         acc[option.category] = acc[option.category] || [];
         acc[option.category].push(option);
         return acc;
     }, {} as Record<string, typeof options>);
+    */
+
+    let groupedOptions: Record<string, typeof options> = {};
+
+    useEffect(() => {
+        getDocList((docs:any) => {
+            let docs_names = JSON.parse(docs);
+    
+            // Prepare new options array including docs_names
+            const newOptions = [...options, ...docs_names.map((doc:Doc) => ({ key: doc.key, text: doc.text, category: doc.category }))];
+    
+            // Use setDocList to update docList state
+            const newDocList = newOptions.reduce((acc, option) => {
+                acc[option.category] = acc[option.category] || [];
+                acc[option.category].push(option);
+                return acc;
+            }, {});
+    
+            setDocList(newDocList);
+        });
+    }, []); 
+
+  
+
+    const handlePanelClick = (e: any, queryCategory: string) => {
+        onPanelClick(e, queryCategory);
+        //onPanelClick(e.target.textContent || e.target.innerText); // Update this string as needed
+    };
 
     
     return (
@@ -94,7 +135,7 @@ const FAQComponent: React.FC<FAQComponentProps> = ({ onPanelClick, ...props }) =
                 <span style={{color: '#d13438'}}>FAQs</span>
             </Label>
             <Accordion multiple>
-            {Object.entries(groupedOptions).map(([category, questions], idx) => (
+            {Object.entries(docList).map(([category, questions], idx) => (
                
              
                 <AccordionItem key={idx} value={category}>

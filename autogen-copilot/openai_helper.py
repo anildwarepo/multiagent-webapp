@@ -14,6 +14,11 @@ api_key = os.environ["AZURE_OPENAI_API_KEY"]
 deployment = "gpt-4"
 model: str = "text-embedding-ada-002" 
 
+client = AzureOpenAI(
+    api_key=os.getenv("AZURE_OPENAI_KEY"),  
+    api_version="2023-12-01-preview",
+    azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT")
+)
 
 
 @retry(wait=wait_random_exponential(min=1, max=20), stop=stop_after_attempt(6))
@@ -33,11 +38,31 @@ def generate_embeddings(text, model=model):
         raise
     
 
+def get_chatgpt_base_response(userQuery, system_message , service_bus_session_id, queue=None):
 
-def get_chatgpt_response(userQuery, service_bus_session_id, queue=None):
+    completion = client.chat.completions.create(
+        model=os.getenv('DEPLOYMENT_NAME'),
+        messages=[
+            {
+                "role": "system",
+                "content": system_message
+            },
+            {
+                "role": "user",
+                "content": userQuery
+            }
+        ],
+        temperature=0,
+        max_tokens=100,
+        stream=False)
+    
+    return completion.choices[0].message.content
+    
+
+def get_chatgpt_response(userQuery, system_message , service_bus_session_id, queue=None):
         
         gptPrompt = {
-            "systemMessage": {"role": "system", "content": "You are an AI assistant. Always end your response with 'CONV_END' to end the conversation. Format response with appropriate HTML tags. "},
+            "systemMessage": {"role": "system", "content": system_message},
             "question": {"role": "user", "content": userQuery}
         }
         prompt = {"maxTokens": "500", "temperature": "0.5", "gptPrompt": gptPrompt}
