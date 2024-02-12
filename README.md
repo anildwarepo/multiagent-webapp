@@ -34,8 +34,8 @@ If you like to try out the multiagent chatbot, you can follow the steps below.
 - Python 3.10
 - Bash
 - Docker
-- SQL Server database with Northwind database installed. You can follow the steps [here](https://docs.microsoft.com/en-us/sql/samples/northwind-install-configure?view=sql-server-ver15&tabs=ssms) to install the Northwind database.
-- Vector database with company info documents.
+- SQL Server database with Northwind database installed. You can follow the steps [here](https://github.com/microsoft/sql-server-samples/blob/master/samples/databases/northwind-pubs/instnwnd%20(Azure%20SQL%20Database).sql) to install the Northwind database.
+- Vector database with company info documents. You can populate the vector using a few sample documents in this repo under vectordb_data and using the script in autogen-copilot/search-indexer-vectordb.py. Please [see this](https://github.com/microsoft/OpenAIWorkshop/blob/main/scenarios/openai_on_custom_dataset/SemiAutomated.md) for more information.
 
 
 ### Installation
@@ -43,6 +43,7 @@ If you like to try out the multiagent chatbot, you can follow the steps below.
 - Update autogen-copilot/search_helper.py to include your own vector database and documents. 
 - Update SQL Server connection string in autogen-copilot/sql_helper.py
 - Update the backendHost under chat-fluentui/src/config.json to point to http://localhost:5000.
+- Update Azure OpenAI Endpoint and Key in autogen-copilot/OAI_CONFIG_LIST_RENAME. Rename the file to OAI_CONFIG_LIST.
 
 
 ### Running the app

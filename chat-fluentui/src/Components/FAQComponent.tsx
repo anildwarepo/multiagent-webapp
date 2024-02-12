@@ -11,8 +11,6 @@ import { Text } from "@fluentui/react";
 import * as Styles from "./styles";
 import { useEffect } from 'react';
 import { getDocList } from '../Services/serviceCallers';
-import { get } from "http";
-
 
 interface FAQComponentProps {
     onPanelClick: (query: string, queryCategory: string) => void;
@@ -92,31 +90,28 @@ const FAQComponent: React.FC<FAQComponentProps> = ({ onPanelClick, ...props }) =
 
     const [docList, setDocList] = React.useState<Record<string, typeof options>>({});
     
-    /*
-    const groupedOptions = options.reduce((acc, option) => {
-        acc[option.category] = acc[option.category] || [];
-        acc[option.category].push(option);
-        return acc;
-    }, {} as Record<string, typeof options>);
-    */
-
-    let groupedOptions: Record<string, typeof options> = {};
-
     useEffect(() => {
         getDocList((docs:any) => {
-            let docs_names = JSON.parse(docs);
-    
-            // Prepare new options array including docs_names
-            const newOptions = [...options, ...docs_names.map((doc:Doc) => ({ key: doc.key, text: doc.text, category: doc.category }))];
-    
-            // Use setDocList to update docList state
-            const newDocList = newOptions.reduce((acc, option) => {
-                acc[option.category] = acc[option.category] || [];
-                acc[option.category].push(option);
-                return acc;
-            }, {});
-    
-            setDocList(newDocList);
+            try
+            {
+                let docs_names = JSON.parse(docs);
+        
+                // Prepare new options array including docs_names
+                const newOptions = [...options, ...docs_names.map((doc:Doc) => ({ key: doc.key, text: doc.text, category: doc.category }))];
+        
+                // Use setDocList to update docList state
+                const newDocList = newOptions.reduce((acc, option) => {
+                    acc[option.category] = acc[option.category] || [];
+                    acc[option.category].push(option);
+                    return acc;
+                }, {});
+        
+                setDocList(newDocList);
+            }
+            catch (e)
+            {
+                console.log(e);
+            }
         });
     }, []); 
 

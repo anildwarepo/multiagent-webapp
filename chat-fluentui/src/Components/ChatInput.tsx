@@ -13,9 +13,12 @@ import { ChatMessage, Chat } from '../Interfaces/iprompt';
 import { sendMessage, cancelStream, getGreetings } from '../Services/serviceCallers';
 import ReactMarkdown from 'react-markdown';
 import AIChartComponent from "./AIChartComponent";
-import { Person24Filled, Bot24Filled, Send24Filled, Send24Regular, RecordStop24Filled, RecordStop24Regular } from '@fluentui/react-icons';
+import { Person24Filled, Bot24Filled, Send24Filled, Send24Regular, RecordStop24Filled, RecordStop24Regular, ChatSettings24Regular } from '@fluentui/react-icons';
 import { Text } from '@fluentui/react';
 import SkeletonComponent from "./SkeletonComponent";
+import { Panel } from '@fluentui/react/lib/Panel';
+import { useBoolean } from '@fluentui/react-hooks';
+import { SystemSettingsComponent } from './SystemSettingsComponent';
 
 interface ChatInputComponentProps extends Partial<TextareaProps> {
     faq: string;
@@ -35,7 +38,7 @@ const ChatInputComponent: React.FC<ChatInputComponentProps>  = ({faq, queryCateg
     const [isHovered, setIsHovered] = useState(false);
     const handleMouseEnter = () => setIsHovered(true);
     const handleMouseLeave = () => setIsHovered(false);
-
+    const [isOpen, { setTrue: openPanel, setFalse: dismissPanel }] = useBoolean(false);                          
 
     useEffect(() => {
         setUserQuery(faq ?? '');
@@ -132,6 +135,7 @@ const ChatInputComponent: React.FC<ChatInputComponentProps>  = ({faq, queryCateg
         <div >
 
             <Stack className={Styles.scrollableContainerStyle} >
+                
                 {
                     chatHistory.map((chat, index) => (
                         <Stack key={index}  >
@@ -144,7 +148,7 @@ const ChatInputComponent: React.FC<ChatInputComponentProps>  = ({faq, queryCateg
                                 </div>
                                 <div >
                                     {
-                                        chat.userType === 'user' ? <h4>You</h4> : <h4>Autogen</h4>
+                                        chat.userType === 'user' ? <h4>You</h4> : <h4>Azure OpenAI GPT-4-Turbo Model Response</h4>
                                     }
                                 </div>
                             </Stack>
@@ -178,7 +182,30 @@ const ChatInputComponent: React.FC<ChatInputComponentProps>  = ({faq, queryCateg
             </Stack>
             <div >
                 <Label htmlFor={textareaId}></Label>
+
                 <Stack horizontal className={Styles.chatAreaStackStyle}>
+                    <ChatSettings24Regular style={{ marginRight: '10px' }} onClick={openPanel}/>
+                    <Panel
+                        isLightDismiss
+                        
+                        styles={{ 
+                        main: { background: '#616161',  }, 
+                        //header: { background: '#3d3d3d'},
+                        //headerText: { color: 'white' },
+                        commands: { background: '#616161' },
+                        content: { color: 'white' },
+                        
+                        }}
+                        //headerText="Chat Settings"
+                        
+                        isOpen={isOpen}
+                        onDismiss={dismissPanel}
+                        // You MUST provide this prop! Otherwise screen readers will just say "button" with no label.
+                        closeButtonAriaLabel="Close"
+                    >
+                        
+                        <SystemSettingsComponent />
+                    </Panel>
                     <Textarea id={textareaId} {...props}
                         style={{ width: '95%', border: 'none' }}
                         disabled={isSending}

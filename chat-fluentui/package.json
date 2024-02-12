@@ -11,6 +11,7 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@fluentui/example-data": "8.4.15",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.62",
     "@types/react": "^18.2.37",

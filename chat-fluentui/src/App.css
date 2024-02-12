@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+
+
+textarea::selection {
+  background: #61dafb; /* Light blue background */
+  color: #000; /* Black text */
+
+}

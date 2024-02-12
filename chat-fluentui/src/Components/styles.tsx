@@ -245,4 +245,10 @@ export const alignCenter = mergeStyles({
 
 });
 
+export const systemMessageStyles = mergeStyles({
+ width: '100%',
+ padding: '15px 10px',
+
+});
+
 export * from './styles';

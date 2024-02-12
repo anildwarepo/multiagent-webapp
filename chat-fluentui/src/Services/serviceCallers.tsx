@@ -36,7 +36,7 @@ export const getDocList = (onDataReceived:any) => {
     // Process the data...
   })
   .catch(error => {
-    console.error("Stream failed:", error);
+    console.error("getDocList:", error);
     onDataReceived("Error occurred while sending message.");
     return {
       "api": "getDocList",
@@ -68,7 +68,7 @@ export const getGreetings = (onDataReceived:any) => {
       // Process the data...
     })
     .catch(error => {
-      console.error("Stream failed:", error);
+      console.error("getGreetings:", error);
       onDataReceived("Error occurred while sending message.");
       return {
         "api": "getGreetings",
@@ -114,7 +114,7 @@ export const sendMessage = (userQuery: string, chatMessage: ChatMessage, onDataR
       // Process the data...
     })
     .catch(error => {
-      console.error("Stream failed:", error);
+      console.error("sendMessage:", error);
       onDataReceived("Error occurred while sending message.");
       return {
         "api": "send_chat",
